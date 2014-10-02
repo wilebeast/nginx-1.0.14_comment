@@ -26,7 +26,7 @@ void __cyg_profile_func_exit( void *, void * )
 
 
 static FILE *fp;
-
+int call_stack_switch  = 1;
 
 void main_constructor( void )
 {
@@ -43,12 +43,18 @@ void main_deconstructor( void )
 
 void __cyg_profile_func_enter( void *this, void *callsite )
 {
-  fprintf(fp, "E%p\n", (int *)this);
+  	if(call_stack_switch)
+ 	 {
+		fprintf(fp, "E%p\n", (int *)this);
+  	} 
 }
 
 
 void __cyg_profile_func_exit( void *this, void *callsite )
-{
-  fprintf(fp, "X%p\n", (int *)this);
+{	
+	if(call_stack_switch)
+	{
+		fprintf(fp, "X%p\n", (int *)this);
+	} 
 }
 
